@@ -10,8 +10,8 @@ import {
 
 import { Exclude } from 'class-transformer';
 
-@Entity('customers')
-class Customer {
+@Entity('users')
+class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -21,7 +21,16 @@ class Customer {
   @Column()
   email: string;
 
-  @OneToMany(() => Order, order => order.customer)
+  @Column()
+  password: string;
+
+  @Column()
+  administrator: boolean;
+
+  @Column()
+  avatar: string;
+
+  @OneToMany(() => Order, order => order.user)
   @Exclude()
   order: string;
 
@@ -32,4 +41,4 @@ class Customer {
   updated_at: Date;
 }
 
-export default Customer;
+export default User;

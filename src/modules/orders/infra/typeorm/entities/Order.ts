@@ -11,7 +11,7 @@ import {
 
 import { Exclude } from 'class-transformer';
 
-import Customer from '@modules/customers/infra/typeorm/entities/Customer';
+import User from '@modules/users/infra/typeorm/entities/User';
 import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
 
 @Entity('orders')
@@ -23,9 +23,9 @@ class Order {
   @Exclude()
   customer_id: string;
 
-  @ManyToOne(() => Customer, customer => customer.order)
+  @ManyToOne(() => User, user => user.order)
   @JoinColumn({ name: 'customer_id' })
-  customer: Customer;
+  user: User;
 
   @OneToMany(() => OrdersProducts, ordersProducts => ordersProducts.order, {
     cascade: true,

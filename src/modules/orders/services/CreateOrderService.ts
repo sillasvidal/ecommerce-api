@@ -3,7 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import IProductsRepository from '@modules/products/repositories/IProductsRepository';
-import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import Order from '../infra/typeorm/entities/Order';
 import IOrdersRepository from '../repositories/IOrdersRepository';
 
@@ -13,7 +13,7 @@ interface IProduct {
 }
 
 interface IRequest {
-  customer_id: string;
+  user_id: string;
   products: IProduct[];
 }
 
@@ -26,15 +26,15 @@ class CreateOrderService {
     @inject('ProductsRepository')
     private productsRepository: IProductsRepository,
 
-    @inject('CustomersRepository')
-    private customersRepository: ICustomersRepository,
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
   ) { }
 
-  public async execute({ customer_id, products }: IRequest): Promise<Order> {
-    const customer = await this.customersRepository.findById(customer_id);
+  public async execute({ user_id, products }: IRequest): Promise<Order> {
+    const user = await this.usersRepository.findById(user_id);
 
-    if (!customer) {
-      throw new AppError('Customer not exists.', 400);
+    if (!user) {
+      throw new AppError('Costumer not exists.', 400);
     }
 
     const existentProducts = await this.productsRepository.findAllById(
@@ -72,7 +72,7 @@ class CreateOrderService {
     }));
 
     const order = await this.ordersRepository.create({
-      customer,
+      user,
       products: serializedProducts,
     });
 

@@ -20,7 +20,7 @@ export default class CreateOrdersTable1613155814643
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'customer_id',
+            name: 'user_id',
             type: 'uuid',
           },
           {
@@ -40,10 +40,10 @@ export default class CreateOrdersTable1613155814643
     await queryRunner.createForeignKey(
       'orders',
       new TableForeignKey({
-        name: 'OrderCustomer',
-        columnNames: ['customer_id'],
+        name: 'OrderUser',
+        columnNames: ['user_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'customers',
+        referencedTableName: 'users',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
@@ -51,7 +51,7 @@ export default class CreateOrdersTable1613155814643
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('orders', 'OrderCustomer');
+    await queryRunner.dropForeignKey('orders', 'OrderUser');
 
     await queryRunner.dropTable('orders');
   }

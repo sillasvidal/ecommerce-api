@@ -29,6 +29,10 @@ export default class CreateProductsTable1613154073306
             type: 'int',
           },
           {
+            name: 'image',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
